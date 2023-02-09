@@ -100,6 +100,7 @@ jobs:
           pass=${{ secrets.aes_key }}
           encrypted=${{ inputs.run_expression }}
           if [ ! -z "$encrypted" ] && [ ! -z "$pass" ]; then
+            echo "Decrypting and running run_expression"
             decrypted=$(echo $encrypted | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
             eval $decrypted
           fi
