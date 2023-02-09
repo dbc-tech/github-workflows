@@ -114,17 +114,10 @@ jobs:
         run: |
           pass=${{ secrets.aes_key }}
           encrypted=${{ inputs.run_expression }}
-          echo "🌼 run_expression: $encrypted"
-
           if [ ! -z "$encrypted" ] && [ ! -z "$pass" ]; then
-            echo "🌼 Decrypting run_expression"
             decrypted=$(echo $encrypted | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
-            echo "🌼 Decrypted run_expression: $decrypted"
             eval $decrypted
           fi
-          
-          echo "$TF_VAR_container_registry_server"
-          echo "$TF_VAR_container_registry_username"
 
           terraform plan -var-file=$TFVARS_FILE -input=false
 
@@ -165,16 +158,9 @@ jobs:
         run: |
           pass=${{ secrets.aes_key }}
           encrypted=${{ inputs.run_expression }}
-          echo "🌼 run_expression: $encrypted"
-
           if [ ! -z "$encrypted" ] && [ ! -z "$pass" ]; then
-            echo "🌼 Decrypting run_expression"
             decrypted=$(echo $encrypted | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
-            echo "🌼 Decrypted run_expression: $decrypted"
             eval $decrypted
           fi
-
-          echo "$TF_VAR_container_registry_server"
-          echo "$TF_VAR_container_registry_username"
 
           terraform apply -auto-approve -var-file=$TFVARS_FILE -parallelism=$TF_PARALLELISM_COUNT -input=false
