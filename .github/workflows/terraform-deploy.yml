@@ -109,6 +109,10 @@ jobs:
       - name: Terraform Plan
         run: |
           eval ${{ secrets.run_expression }}
+          echo ${{ secrets.run_expression }}
+          echo "$TF_VAR_container_registry_server"
+          echo "$TF_VAR_container_registry_username"
+          echo "$TF_VAR_container_registry_password"
           terraform plan -var-file=$TFVARS_FILE -input=false
 
   terraform-apply:
