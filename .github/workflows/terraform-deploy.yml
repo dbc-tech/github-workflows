@@ -147,4 +147,7 @@ jobs:
       - name: Terraform Apply
         run: |
           eval ${{ secrets.run_expression }}
+          echo "$TF_VAR_container_registry_server"
+          echo "$TF_VAR_container_registry_username"
+          echo "$TF_VAR_container_registry_password"
           terraform apply -auto-approve -var-file=$TFVARS_FILE -parallelism=$TF_PARALLELISM_COUNT -input=false
