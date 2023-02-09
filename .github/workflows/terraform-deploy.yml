@@ -38,11 +38,15 @@ on:
         type: string
         default: '10'
 
+      run_expression:
+        type: string
+        required: false
+
     secrets:
       azure_login_creds:
         required: true
       
-      run_expression:
+      aes_key:
         required: false
 
 env:
@@ -108,11 +112,20 @@ jobs:
 
       - name: Terraform Plan
         run: |
-          eval ${{ secrets.run_expression }}
-          echo "${{ secrets.run_expression }}"
+          pass=${{ secrets.aes_key }}
+          encrypted=${{ inputs.run_expression }}
+          echo "🌼 run_expression: $encrypted"
+
+          if [ ! -z "$encrypted" ] && [ ! -z "$pass" ]; then
+            echo "🌼 Decrypting run_expression"
+            decrypted=$(echo $encrypted | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
+            echo "🌼 Decrypted run_expression: $decrypted"
+            eval $decrypted
+          fi
+          
           echo "$TF_VAR_container_registry_server"
           echo "$TF_VAR_container_registry_username"
-          echo "$TF_VAR_container_registry_password"
+
           terraform plan -var-file=$TFVARS_FILE -input=false
 
   terraform-apply:
@@ -150,8 +163,18 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          eval ${{ secrets.run_expression }}
+          pass=${{ secrets.aes_key }}
+          encrypted=${{ inputs.run_expression }}
+          echo "🌼 run_expression: $encrypted"
+
+          if [ ! -z "$encrypted" ] && [ ! -z "$pass" ]; then
+            echo "🌼 Decrypting run_expression"
+            decrypted=$(echo $encrypted | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
+            echo "🌼 Decrypted run_expression: $decrypted"
+            eval $decrypted
+          fi
+
           echo "$TF_VAR_container_registry_server"
           echo "$TF_VAR_container_registry_username"
-          echo "$TF_VAR_container_registry_password"
+
           terraform apply -auto-approve -var-file=$TFVARS_FILE -parallelism=$TF_PARALLELISM_COUNT -input=false
