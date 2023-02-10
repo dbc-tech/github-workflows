@@ -90,12 +90,6 @@ jobs:
           name: ${{ env.AUTO_TFVARS_ARTIFACT }}
           path: ${{ env.WORKING_DIR }}
 
-      - name: Show tfvars artifact
-        if: ${{ inputs.auto_tf_var_files_artifact }}
-        run: |
-          echo "tfvars artifact contents:"
-          cat "./values.auto.tfvars"
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
