@@ -41,8 +41,8 @@ on:
       run_expression:
         type: string
         required: false
-        
-      aut_tfvars:
+
+      auto_tfvars:
         type: string
         required: false
 
@@ -130,9 +130,8 @@ jobs:
           # echo "🌼 TF_VAR_image_name=$TF_VAR_image_name"
           # echo "🌼 TF_VAR_app_version=$TF_VAR_app_version"
 
-          auto_tfvars='values.auto.tfvars'
-          echo "🌼 $auto_tfvars"
-          echo $auto_tfvars > $auto_tfvars
+          echo '🌼 auto_tfvars ${{ inputs.auto_tfvars }}'
+          echo '${{ inputs.auto_tfvars }}' > 'values.auto.tfvars'
 
           terraform plan -var-file=$TFVARS_FILE -input=false
 
@@ -192,9 +191,8 @@ jobs:
           # echo "🌼 TF_VAR_app_version=$TF_VAR_app_version"
           
 
-          auto_tfvars='values.auto.tfvars'
-          echo "🌼 $auto_tfvars"
-          echo $auto_tfvars > $auto_tfvars
+          echo '🌼 auto_tfvars ${{ inputs.auto_tfvars }}'
+          echo '${{ inputs.auto_tfvars }}' > 'values.auto.tfvars'
           
 
           terraform apply -auto-approve -var-file=$TFVARS_FILE -parallelism=$TF_PARALLELISM_COUNT -input=false
