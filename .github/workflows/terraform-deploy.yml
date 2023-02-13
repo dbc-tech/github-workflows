@@ -93,7 +93,9 @@ jobs:
 
       - name: Create auto tfvars
         if: ${{ inputs.auto_tfvars }}
-        run: echo '${{ inputs.auto_tfvars }}' > 'injected.auto.tfvars'
+        run: | 
+          echo '${{ inputs.auto_tfvars }}' > 'injected.auto.tfvars'
+          echo $(cat injected.auto.tfvars)
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
