@@ -129,7 +129,6 @@ jobs:
           terraform plan -var-file=$TFVARS_FILE -input=false
 
   terraform-apply:
-    if: false
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     needs: terraform-plan
