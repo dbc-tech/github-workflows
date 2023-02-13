@@ -49,9 +49,6 @@ on:
     secrets:
       azure_login_creds:
         required: true
-      
-      aes_key:
-        required: false
 
 env:
   ARM_CLIENT_ID: ${{ fromJson(secrets.azure_login_creds).clientId }}
@@ -94,6 +91,10 @@ jobs:
           name: ${{ env.AUTO_TFVARS_ARTIFACT }}
           path: ${{ env.WORKING_DIR }}
 
+      - name: Create auto tfvars
+        if: ${{ inputs.auto_tfvars }}
+        run: echo '${{ inputs.auto_tfvars }}' > 'injected.auto.tfvars'
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
@@ -109,10 +110,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: |
-          echo '🌼 auto_tfvars ${{ inputs.auto_tfvars }}'
-          echo '${{ inputs.auto_tfvars }}' > 'values.auto.tfvars'
-          terraform plan -var-file=$TFVARS_FILE -input=false
+        run: terraform plan -var-file=$TFVARS_FILE -input=false
 
   terraform-apply:
     name: 'Terraform Apply'
@@ -136,6 +134,10 @@ jobs:
           name: ${{ env.AUTO_TFVARS_ARTIFACT }}
           path: ${{ env.WORKING_DIR }}
 
+      - name: Create auto tfvars
+        if: ${{ inputs.auto_tfvars }}
+        run: echo '${{ inputs.auto_tfvars }}' > 'injected.auto.tfvars'
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
@@ -148,7 +150,4 @@ jobs:
               -backend-config="key=$TF_BACKEND_STATE_KEY"
 
       - name: Terraform Apply
-        run: |
-          echo '🌼 auto_tfvars ${{ inputs.auto_tfvars }}'
-          echo '${{ inputs.auto_tfvars }}' > 'values.auto.tfvars'
-          terraform apply -auto-approve -var-file=$TFVARS_FILE -parallelism=$TF_PARALLELISM_COUNT -input=false
+        run: terraform apply -auto-approve -var-file=$TFVARS_FILE -parallelism=$TF_PARALLELISM_COUNT -input=false
