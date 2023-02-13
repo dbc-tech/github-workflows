@@ -38,7 +38,7 @@ on:
         type: string
         default: '10'
 
-      run_expression:
+      aut_tfvars:
         type: string
         required: false
 
@@ -106,25 +106,29 @@ jobs:
 
       - name: Terraform Plan
         run: |
-          pass=${{ secrets.aes_key }}
-          run_expression=${{ inputs.run_expression }}
-          if [ ! -z "$run_expression" ]; then
-            if [ ! -z "$pass" ]; then
-              echo "🌼 Decrypting and running run_expression"
-              decrypted=$(echo $run_expression | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
-              eval $decrypted > /dev/null
-            else
-              echo "🌼 Running run_expression"
-              eval $run_expression > /dev/null
-            fi
-          fi
+          # pass=${{ secrets.aes_key }}
+          # run_expression=${{ inputs.run_expression }}
+          # if [ ! -z "$run_expression" ]; then
+          #   if [ ! -z "$pass" ]; then
+          #     echo "🌼 Decrypting and running run_expression"
+          #     decrypted=$(echo $run_expression | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
+          #     eval $decrypted > /dev/null
+          #   else
+          #     echo "🌼 Running run_expression"
+          #     eval $run_expression > /dev/null
+          #   fi
+          # fi
 
            
 
-          echo "🌼 TF_VAR_container_registry_server=$TF_VAR_container_registry_server"
-          echo "🌼 TF_VAR_deploy_placeholder=$TF_VAR_deploy_placeholder"
-          echo "🌼 TF_VAR_image_name=$TF_VAR_image_name"
-          echo "🌼 TF_VAR_app_version=$TF_VAR_app_version"
+          # echo "🌼 TF_VAR_container_registry_server=$TF_VAR_container_registry_server"
+          # echo "🌼 TF_VAR_deploy_placeholder=$TF_VAR_deploy_placeholder"
+          # echo "🌼 TF_VAR_image_name=$TF_VAR_image_name"
+          # echo "🌼 TF_VAR_app_version=$TF_VAR_app_version"
+
+          auto_tfvars='values.auto.tfvars'
+          echo "🌼 $auto_tfvars"
+          echo $auto_tfvars > $auto_tfvars
 
           terraform plan -var-file=$TFVARS_FILE -input=false
 
@@ -163,32 +167,30 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          pass=${{ secrets.aes_key }}
-          run_expression=${{ inputs.run_expression }}
-          if [ ! -z "$run_expression" ]; then
-            if [ ! -z "$pass" ]; then
-              echo "🌼 Decrypting and running run_expression"
-              decrypted=$(echo $run_expression | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
-              eval $decrypted > /dev/null
-            else
-              echo "🌼 Running run_expression"
-              eval $run_expression > /dev/null
-            fi
-          fi
+          # pass=${{ secrets.aes_key }}
+          # run_expression=${{ inputs.run_expression }}
+          # if [ ! -z "$run_expression" ]; then
+          #   if [ ! -z "$pass" ]; then
+          #     echo "🌼 Decrypting and running run_expression"
+          #     decrypted=$(echo $run_expression | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
+          #     eval $decrypted > /dev/null
+          #   else
+          #     echo "🌼 Running run_expression"
+          #     eval $run_expression > /dev/null
+          #   fi
+          # fi
 
            
 
-          echo "🌼 TF_VAR_container_registry_server=$TF_VAR_container_registry_server"
-          echo "🌼 TF_VAR_deploy_placeholder=$TF_VAR_deploy_placeholder"
-          echo "🌼 TF_VAR_image_name=$TF_VAR_image_name"
-          echo "🌼 TF_VAR_app_version=$TF_VAR_app_version"
+          # echo "🌼 TF_VAR_container_registry_server=$TF_VAR_container_registry_server"
+          # echo "🌼 TF_VAR_deploy_placeholder=$TF_VAR_deploy_placeholder"
+          # echo "🌼 TF_VAR_image_name=$TF_VAR_image_name"
+          # echo "🌼 TF_VAR_app_version=$TF_VAR_app_version"
           
-          export TF_LOG=DEBUG
 
-          # auto_tfvars='values.auto.tfvars'
-          # echo "deploy_placeholder = '$TF_VAR_deploy_placeholder'" > $auto_tfvars
-          # echo "image_name = '$TF_VAR_image_name' " >> $auto_tfvars
-          # echo "app_version = '$TF_VAR_app_version'" >> $auto_tfvars
-
+          auto_tfvars='values.auto.tfvars'
+          echo "🌼 $auto_tfvars"
+          echo $auto_tfvars > $auto_tfvars
+          
 
           terraform apply -auto-approve -var-file=$TFVARS_FILE -parallelism=$TF_PARALLELISM_COUNT -input=false
