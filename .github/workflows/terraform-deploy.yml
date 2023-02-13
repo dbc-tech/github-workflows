@@ -38,6 +38,10 @@ on:
         type: string
         default: '10'
 
+      run_expression:
+        type: string
+        required: false
+        
       aut_tfvars:
         type: string
         required: false
