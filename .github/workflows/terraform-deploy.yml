@@ -182,4 +182,5 @@ jobs:
           echo "🌼 TF_VAR_deploy_placeholder=$TF_VAR_deploy_placeholder"
           echo "🌼 TF_VAR_image_name=$TF_VAR_image_name"
           echo "🌼 TF_VAR_app_version=$TF_VAR_app_version"
+          export TF_LOG=TRACE TF_LOG_CORE=TRACE TF_LOG_PROVIDER=TRACE
           terraform apply -auto-approve -var-file=$TFVARS_FILE -parallelism=$TF_PARALLELISM_COUNT -input=false
