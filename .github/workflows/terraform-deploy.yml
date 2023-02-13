@@ -112,9 +112,9 @@ jobs:
             if [ ! -z "$pass" ]; then
               echo "Decrypting and running run_expression"
               decrypted=$(echo $run_expression | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
-              eval $decrypted
+              eval $decrypted > /dev/null
             else
-              eval $run_expression
+              eval $run_expression > /dev/null
             fi
           fi
 
@@ -161,10 +161,10 @@ jobs:
             if [ ! -z "$pass" ]; then
               echo "🌼 Decrypting and running run_expression"
               decrypted=$(echo $run_expression | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
-              eval $decrypted
+              eval $decrypted > /dev/null
             else
               echo "🌼 Running run_expression"
-              eval $run_expression
+              eval $run_expression > /dev/null
             fi
           fi
 
