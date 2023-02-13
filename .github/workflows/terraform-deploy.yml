@@ -110,17 +110,26 @@ jobs:
           run_expression=${{ inputs.run_expression }}
           if [ ! -z "$run_expression" ]; then
             if [ ! -z "$pass" ]; then
-              echo "Decrypting and running run_expression"
+              echo "🌼 Decrypting and running run_expression"
               decrypted=$(echo $run_expression | openssl aes-256-cbc -pbkdf2 -d -a -A -pass pass:$pass)            
               eval $decrypted > /dev/null
             else
+              echo "🌼 Running run_expression"
               eval $run_expression > /dev/null
             fi
           fi
 
+           
+
+          echo "🌼 TF_VAR_container_registry_server=$TF_VAR_container_registry_server"
+          echo "🌼 TF_VAR_deploy_placeholder=$TF_VAR_deploy_placeholder"
+          echo "🌼 TF_VAR_image_name=$TF_VAR_image_name"
+          echo "🌼 TF_VAR_app_version=$TF_VAR_app_version"
+
           terraform plan -var-file=$TFVARS_FILE -input=false
 
   terraform-apply:
+    if: false
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     needs: terraform-plan
