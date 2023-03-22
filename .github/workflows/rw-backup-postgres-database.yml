@@ -47,7 +47,7 @@ defaults:
 
 jobs:
   backup:
-    name: 'Backup db data'
+    name: 'Backup database'
     runs-on: ubuntu-latest
 
     environment:
