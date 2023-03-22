@@ -70,6 +70,7 @@ jobs:
   add_db_firewall_rule:
     uses: ./.github/workflows/rw-change-azure-postgres-firewall.yml
     with:
+      github_env: ${{ inputs.github_env }}
       add_or_remove: add
       database_resource_group: ${{ inputs.database_resource_group }}
       database_server_name: ${{ inputs.database_server_name }}
@@ -79,6 +80,7 @@ jobs:
       azure_login_creds: ${{ secrets.az_creds }}
 
   get_database_password:
+    needs: [add_db_firewall_rule]
     uses: ./.github/workflows/rw-get-keyvault-secret.yml
     with:
       keyvault: ${{ inputs.keyvault }}
