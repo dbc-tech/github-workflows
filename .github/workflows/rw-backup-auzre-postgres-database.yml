@@ -6,7 +6,6 @@ on:
       firewall_rule_name:
         type: string
         required: false
-        default: git
         
       github_env:
         type: string
