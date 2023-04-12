@@ -5,7 +5,7 @@ on:
     inputs:
       firewall_rule_name:
         type: string
-        required: false
+        required: true
         
       github_env:
         type: string
