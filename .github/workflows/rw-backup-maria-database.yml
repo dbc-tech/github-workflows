@@ -57,7 +57,7 @@ jobs:
 
       - name: Create
         run: |
-          mysqldump --force --opt --skip-lock-tables --host='${{ inputs.database_server_name }}.mariadb.database.azure.com' --user=${{ inputs.database_user }} -p=${{ secrets.database_password }} --databases cca_quote_dev > mydump.sql
+          mysqldump --force --opt --skip-lock-tables --host='dev-shared-mariadb-shared.mariadb.database.azure.com' --user=${{ inputs.database_user }} -p=${{ secrets.database_password }} --databases cca_quote_dev > mydump.sql
           
       - name: Azure login
         uses: Azure/login@v1
