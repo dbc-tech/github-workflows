@@ -59,7 +59,7 @@ jobs:
         run: |
           PASSWORD='${{ secrets.database_password }}' mysqldump \
           --user=${{ inputs.database_user }} 
-          --password=${{ inputs.database_password_kv_ref }} --all-databases [OPTIONS] > maria_backup.sql
+          --password=${{ inputs.database_password_kv_ref }} cca_quote_dev > maria_backup.sql
 
       - name: Azure login
         uses: Azure/login@v1
