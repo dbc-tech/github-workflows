@@ -57,8 +57,8 @@ jobs:
 
       - name: Create
         run: |
-          PASSWORD='${{ secrets.database_password }}' mysqldump \
-          --user=${{ inputs.database_user }} 
+          PASSWORD='${{ secrets.database_password }}' mysqldump -q \
+          --user=${{ inputs.database_user }} \
           --password=${{ inputs.database_password_kv_ref }} --skip-lock-tables --quick --add-drop-database --routines 'cca_quote_dev'  > maria_backup.sql
 
       - name: Azure login
