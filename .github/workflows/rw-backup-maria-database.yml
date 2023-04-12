@@ -57,7 +57,13 @@ jobs:
 
       - name: Create
         run: |
-          PASSWORD='${{ secrets.database_password }}' mysqldump --user=${{ inputs.database_user }} --password --lock-tables --all-databases > maria_backup.sql
+          PASSWORD='${{ secrets.database_password }}' mysqldump \
+          -h ${{ inputs.database_host }} \
+          --user=${{ inputs.database_user }} \
+          -Fc -v --no-owner --no-privileges \
+          ${{ inputs.options }} \
+          -f ${{ inputs.backup_file_name }} \
+          ${{ inputs.database_name }}
 
       - name: Azure login
         uses: Azure/login@v1
