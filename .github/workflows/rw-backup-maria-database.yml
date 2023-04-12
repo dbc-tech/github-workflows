@@ -57,8 +57,7 @@ jobs:
 
       - name: Create
         run: |
-          PASSWORD='${{ secrets.database_password }}' mysqldump \
-          --user=${{ inputs.database_user }} --all-databases > backup_file.sql
+          PASSWORD='${{ secrets.database_password }}' mysqldump --user=${{ inputs.database_user }} -p --all-databases > backup_file.sql
 
       - name: Azure login
         uses: Azure/login@v1
