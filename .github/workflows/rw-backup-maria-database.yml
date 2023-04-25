@@ -57,7 +57,7 @@ jobs:
 
       - name: Create
         run: |
-          MYSQLPASSWORD='${{ secrets.database_password }}' mysqldump -u root -p cca_quote_dev > mydump.sql
+          MYSQLPASSWORD='${{ secrets.database_password }}' mysqldump -h 'dev-shared-mariadb-shared.mariadb.database.azure.com' -u ${{ inputs.database_user }} -p ssl=1 cca_quote_dev > mydump.sql
           
       - name: Azure login
         uses: Azure/login@v1
