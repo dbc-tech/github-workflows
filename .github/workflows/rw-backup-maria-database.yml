@@ -57,7 +57,7 @@ jobs:
 
       - name: Create
         run: |
-          mysqldump -u ${{ inputs.database_user }} -p 'lv@Z8HpOIvMs@AJ7' -h 'dev-shared-mariadb-shared.mariadb.database.azure.com' cca_quote_dev > mydump.sql
+          mysqldump -u ${{ inputs.database_user }} -p lv@Z8HpOIvMs@AJ7 -h 'dev-shared-mariadb-shared.mariadb.database.azure.com' cca_quote_dev > mydump.sql
           
       - name: Azure login
         uses: Azure/login@v1
