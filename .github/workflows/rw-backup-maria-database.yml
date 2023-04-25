@@ -57,7 +57,7 @@ jobs:
 
       - name: Create
         run: |
-          PGPASSWORD='${{ secrets.database_password }}' mysqldump -u ${{ inputs.database_user }} -h ${{ inputs.database_host }} cca_quote_dev > mydump.sql
+          PGPASSWORD='lv@Z8HpOIvMs@AJ7' mysqldump -u ${{ inputs.database_user }} -h ${{ inputs.database_host }} cca_quote_dev > mydump.sql
           
       - name: Azure login
         uses: Azure/login@v1
