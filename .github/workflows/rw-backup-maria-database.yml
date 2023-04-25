@@ -57,7 +57,7 @@ jobs:
 
       - name: Create
         run: |
-         mysqldump -u ${{ inputs.database_user }} -p 'lv@Z8HpOIvMs@AJ7' --all-databases -h 'dev-shared-mariadb-shared.mariadb.database.azure.com' --port=3306 > mydump.sql
+         mysqldump -u ${{ inputs.database_user }} -p 'lv@Z8HpOIvMs@AJ7' --all-databases --host='dev-shared-mariadb-shared.mariadb.database.azure.com' --port=3306 > mydump.sql
           
       - name: Azure login
         uses: Azure/login@v1
