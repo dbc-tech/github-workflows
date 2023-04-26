@@ -57,7 +57,7 @@ jobs:
 
       - name: Create
         run: |
-          mysqldump --force --opt --skip-lock-tables --host=${{ inputs.database_host }} --user=${{ inputs.database_user }} -plv@Z8HpOIvMs@AJ7 cca_quote_dev | gzip > ${{ inputs.backup_file_name }}
+          mysqldump --force --opt --skip-lock-tables --host=${{ inputs.database_host }} --user=${{ inputs.database_user }} -p${{ inputs.database_user }} cca_quote_dev | gzip > ${{ inputs.backup_file_name }}
           
       - name: Azure login
         uses: Azure/login@v1
