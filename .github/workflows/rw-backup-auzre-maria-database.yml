@@ -64,7 +64,7 @@ jobs:
       - name: Create
         id: metadata
         run: |
-          echo "backup_filename=${{ inputs.database_server_name }}/${{ inputs.database_name}}/${{ inputs.database_server_name }}_${{ inputs.database_name}}_$(date +%Y-%m-%d_%H:%M:%S).sql" >> $GITHUB_OUTPUT
+          echo "backup_filename=${{ inputs.database_server_name }}/${{ inputs.database_name}}/${{ inputs.database_server_name }}_${{ inputs.database_name}}_$(date +%Y-%m-%d_%H:%M:%S).zip" >> $GITHUB_OUTPUT
 
   add_db_firewall_rule:
     uses: ./.github/workflows/rw-change-azure-maria-firewall.yml
