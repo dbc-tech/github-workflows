@@ -53,7 +53,7 @@ jobs:
 
       - name: Create
         run: |
-          MYSQL_PWD='${{ secrets.database_password }}' mysqldump --column-statistics=0 --force --opt --skip-lock-tables --host=${{ inputs.database_host }} --user=${{ inputs.database_user }} cca_quote_dev | gzip > ${{ inputs.backup_file_name }}
+          MYSQL_PWD='${{ secrets.database_password }}' mysqldump --column-statistics=0 --force --opt --skip-lock-tables --host=${{ inputs.database_host }} --user=${{ inputs.database_user }} ${{ inputs.database_name }} | gzip > mariadb_backup.bak
           
       - name: Azure login
         uses: Azure/login@v1
@@ -68,4 +68,5 @@ jobs:
             az storage blob upload \
             --account-name ${{ inputs.storage_account_name }} \
             --container-name ${{ inputs.storage_container_name }} \
-            --file ${{ inputs.backup_file_name }}
+            --file mariadb_backup.bak \
+            --name ${{ inputs.backup_file_name }}
