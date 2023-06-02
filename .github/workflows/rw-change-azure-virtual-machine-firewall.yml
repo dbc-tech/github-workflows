@@ -12,11 +12,6 @@ on:
         type: string
         required: true
 
-      firewall_rule_name:
-        type: string
-        required: false
-        default: github-runner
-
     secrets:
       azure_login_creds:
         required: true
