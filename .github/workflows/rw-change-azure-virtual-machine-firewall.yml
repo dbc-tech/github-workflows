@@ -3,12 +3,6 @@ name: RW — Change Azure virtualMachine' firewall rule
 on:
   workflow_call:
     inputs:
-      github_env:
-        type: string
-
-      add_or_remove:
-        type: string
-        required: true
 
       virtual_machine_resource_group:
         type: string
@@ -36,11 +30,7 @@ jobs:
     name: 'Change firewall rule'
     runs-on: ubuntu-latest
 
-    environment:
-      name: ${{ inputs.github_env  }}
-
     steps:
-      - uses: actions/checkout@v3
 
       - name: Get runner IP
         id: get-runner-ip
@@ -56,6 +46,14 @@ jobs:
         with:
           creds: '${{ secrets.azure_login_creds }}'
 
+      - name: Remove any previously created firewall rule (AzureNSG)
+        continue-on-error: true
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            az network nsg rule update --resource-group ${{ inputs.virtual_machine_resource_group }} --nsg-name ${{ inputs.nsg_name }} --name SSH --priority 100 --access Deny    
+
       - name: Add firewall rule (AzureNSG)
         
         uses: azure/CLI@v1
@@ -64,11 +62,5 @@ jobs:
           inlineScript: |
             az network nsg rule create --resource-group ${{ inputs.virtual_machine_resource_group }} --nsg-name ${{ inputs.nsg_name }} --name SSH --protocol Tcp --direction Inbound --priority 100 --start-ip-address ${{ steps.get-runner-ip.outputs.runner_ip }} --end-ip-address ${{ steps.get-runner-ip.outputs.runner_ip }} --destination-port-range 22 --access Allow   
 
-      - name: Remove any previously created firewall rule (AzureNSG)
-        continue-on-error: true
-        uses: azure/CLI@v1
-        with:
-          azcliversion: 2.30.0
-          inlineScript: |
-            az network nsg rule update --resource-group ${{ inputs.virtual_machine_resource_group }} --nsg-name ${{ inputs.nsg_name }} --name SSH --priority 100 --access Deny
+      
       
