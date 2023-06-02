@@ -47,7 +47,7 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            az network nsg rule remove --resource-group ${{ inputs.virtual_machine_resource_group }} --nsg-name ${{ inputs.nsg_name }} --name GHA_SSH --priority 100 --destination-port-range 22 --access Allow    
+            az network nsg rule delete --resource-group ${{ inputs.virtual_machine_resource_group }} --nsg-name ${{ inputs.nsg_name }} --name GHA_SSH --priority 100 --destination-port-range 22 --access Allow    
 
       - name: Add firewall rule (AzureNSG)
         
