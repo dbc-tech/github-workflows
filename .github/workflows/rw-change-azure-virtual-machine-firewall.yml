@@ -66,6 +66,8 @@ jobs:
 
       - name: Add firewall rule (AzureNSG)
         
+        if: ${{ inputs.add_or_remove == 'add' }}
+        
         uses: azure/CLI@v1
         with:
           azcliversion: 2.30.0
