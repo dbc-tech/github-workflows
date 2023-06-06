@@ -1,4 +1,4 @@
-name: RW — Change Azure virtualMachine' firewall rule
+name: RW — Change Azure virtualMachine firewall rule
 
 on:
   workflow_call:
