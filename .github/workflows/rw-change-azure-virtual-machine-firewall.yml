@@ -3,7 +3,7 @@ name: RW — Change Azure virtualMachine' firewall rule
 on:
   workflow_call:
     inputs:
-
+    
       github_env:
         type: string
 
@@ -36,7 +36,7 @@ jobs:
   change_firewall_rule:
     name: 'Change firewall rule'
     runs-on: ubuntu-latest
-
+    
     environment:
       name: ${{ inputs.github_env  }}
 
@@ -75,6 +75,3 @@ jobs:
           azcliversion: 2.30.0
           inlineScript: |
             az network nsg rule create --resource-group ${{ inputs.virtual_machine_resource_group }} --nsg-name ${{ inputs.nsg_name }} --name ${{ inputs.firewall_rule_name }} --protocol Tcp --direction Inbound --priority 100 --start-ip-address ${{ steps.get-runner-ip.outputs.runner_ip }} --end-ip-address ${{ steps.get-runner-ip.outputs.runner_ip }} --destination-port-range 22 --access Allow   
-
-      
-      
