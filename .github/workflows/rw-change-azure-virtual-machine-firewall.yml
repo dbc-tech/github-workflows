@@ -41,6 +41,8 @@ jobs:
       name: ${{ inputs.github_env  }}
 
     steps:
+    
+      - uses: actions/checkout@v3
 
       - name: Get runner IP
         id: get-runner-ip
