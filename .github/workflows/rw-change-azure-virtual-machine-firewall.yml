@@ -4,6 +4,18 @@ on:
   workflow_call:
     inputs:
 
+      github_env:
+        type: string
+
+      add_or_remove:
+        type: string
+        required: true
+
+      firewall_rule_name:
+        type: string
+        required: false
+        default: github-runner  
+
       virtual_machine_resource_group:
         type: string
         required: true
@@ -24,6 +36,9 @@ jobs:
   change_firewall_rule:
     name: 'Change firewall rule'
     runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ inputs.github_env  }}
 
     steps:
 
