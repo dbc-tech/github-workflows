@@ -86,7 +86,7 @@ jobs:
 
       - name: Download auto tfvars
         if: ${{ env.AUTO_TFVARS_ARTIFACT }}
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: ${{ env.AUTO_TFVARS_ARTIFACT }}
           path: ${{ env.WORKING_DIR }}
@@ -131,7 +131,7 @@ jobs:
 
       - name: Download auto tfvars
         if: ${{ env.AUTO_TFVARS_ARTIFACT }}
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: ${{ env.AUTO_TFVARS_ARTIFACT }}
           path: ${{ env.WORKING_DIR }}
